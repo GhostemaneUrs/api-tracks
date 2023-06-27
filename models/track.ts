@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-interface ITracks {
+interface ITrack {
   name: string;
   album: string;
   cover: Record<string, string>;
@@ -24,7 +24,7 @@ const coverValidator = {
     `${props.value} is not a valid URL!`,
 };
 
-const TracksSchema: Schema<ITracks> = new mongoose.Schema<ITracks>(
+const TracksSchema: Schema<ITrack> = new mongoose.Schema<ITrack>(
   {
     name: {
       type: String,
@@ -65,4 +65,4 @@ const TracksSchema: Schema<ITracks> = new mongoose.Schema<ITracks>(
   }
 );
 
-export default mongoose.model<ITracks>('tracks', TracksSchema);
+export default mongoose.model<ITrack>('tracks', TracksSchema);

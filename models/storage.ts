@@ -20,4 +20,4 @@ const StorageSchema: Schema<IStorage> = new mongoose.Schema<IStorage>(
   }
 );
 
-export default mongoose.model<IStorage>('storage', StorageSchema);
+export default mongoose.model<IStorage>('storages', StorageSchema);
