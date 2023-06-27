@@ -1,11 +1,6 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
-interface IStorage {
-  url: string;
-  filename: string;
-}
-
-const StorageSchema: Schema<IStorage> = new mongoose.Schema<IStorage>(
+const StorageSchema = new mongoose.Schema(
   {
     url: {
       type: String,
@@ -20,4 +15,4 @@ const StorageSchema: Schema<IStorage> = new mongoose.Schema<IStorage>(
   }
 );
 
-export default mongoose.model<IStorage>('storages', StorageSchema);
+export default mongoose.model('storages', StorageSchema);

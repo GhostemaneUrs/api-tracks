@@ -1,20 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
-
-interface ITrack {
-  name: string;
-  album: string;
-  cover: Record<string, string>;
-  artist: {
-    name: string;
-    nickname: string;
-    nationality: string;
-  };
-  duration: {
-    start: number;
-    end: number;
-  };
-  mediaId: mongoose.Schema.Types.ObjectId;
-}
+import mongoose from 'mongoose';
 
 const coverValidator = {
   validator: (v: string): boolean => {
@@ -24,7 +8,7 @@ const coverValidator = {
     `${props.value} is not a valid URL!`,
 };
 
-const TracksSchema: Schema<ITrack> = new mongoose.Schema<ITrack>(
+const TracksSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -65,4 +49,4 @@ const TracksSchema: Schema<ITrack> = new mongoose.Schema<ITrack>(
   }
 );
 
-export default mongoose.model<ITrack>('tracks', TracksSchema);
+export default mongoose.model('tracks', TracksSchema);
