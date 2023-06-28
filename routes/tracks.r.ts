@@ -1,8 +1,8 @@
 import express from 'express';
-const router = express.Router();
+import { getTrack, getTracks } from '../controllers/tracks';
 
-router.get('/', (req, res) => {
-  res.send({ message: 'Hello from tracks' });
-});
+const router = express.Router();
+router.get('/', getTracks);
+router.get('/:id', getTrack);
 
 module.exports = router;
