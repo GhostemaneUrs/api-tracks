@@ -1,8 +1,8 @@
 import express from 'express';
-const router = express.Router();
+import { uploadFile } from '../controllers/storages';
+import { uploadMiddleware } from '../utils/storages';
 
-router.get('/', (req, res) => {
-  res.send({ message: 'Hello from storage' });
-});
+const router = express.Router();
+router.post('/', uploadMiddleware.single('file'), uploadFile);
 
 module.exports = router;
