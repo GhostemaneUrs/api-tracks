@@ -1,5 +1,5 @@
 import { check } from 'express-validator';
-import { validateResult } from '../utils/files';
+import { validateResult } from '../utils/validations';
 import { NextFunction, Response, Request } from 'express';
 
 export const createTrackValidator = [
