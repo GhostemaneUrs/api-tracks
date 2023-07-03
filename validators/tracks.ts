@@ -2,6 +2,12 @@ import { check } from 'express-validator';
 import { validateResult } from '../utils/validations';
 import { NextFunction, Response, Request } from 'express';
 
+export const getTrackValidator = [
+  check('id').exists().notEmpty().isMongoId(),
+  (req: Request, res: Response, next: NextFunction) =>
+    validateResult(req, res, next),
+];
+
 export const createTrackValidator = [
   check('name').exists().notEmpty(),
   check('album').exists().notEmpty(),
