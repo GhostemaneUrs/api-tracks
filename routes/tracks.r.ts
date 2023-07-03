@@ -5,11 +5,11 @@ import {
   updateTrack,
   createTrack,
 } from '../controllers/tracks';
-import { createTrackValidator } from '../validators/tracks';
+import { createTrackValidator, getTrackValidator } from '../validators/tracks';
 
 const router = express.Router();
 router.get('/', getTracks);
-router.get('/:id', getTrack);
+router.get('/:id', getTrackValidator, getTrack);
 router.post('/', createTrackValidator, createTrack);
 router.put('/:id', updateTrack);
 
