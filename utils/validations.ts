@@ -1,5 +1,16 @@
+import { responseError } from './response';
 import { NextFunction, Response, Request } from 'express';
-import { validationResult, Result } from 'express-validator';
+import { validationResult, Result, ValidationError } from 'express-validator';
+
+const extractedErrors = (errors: Result<ValidationError>) => {
+  const extractedErrors: { [key: string]: string } = {};
+  const validationErrors: { [key: string]: ValidationError } = errors.mapped();
+  Object.keys(validationErrors).forEach((key) => {
+    const error = validationErrors[key];
+    extractedErrors[key] = error.msg;
+  });
+  return extractedErrors;
+};
 
 export const validateResult = (
   req: Request,
@@ -7,15 +18,10 @@ export const validateResult = (
   next: NextFunction
 ) => {
   try {
-    const errors: Result<unknown> = validationResult(req);
+    const errors: Result<ValidationError> = validationResult(req);
     if (errors.isEmpty()) return next();
-    res.status(403);
-    res.send({
-      message: 'Validation error',
-      errors: errors.array(),
-    });
+    responseError(res, 'Validation Error', extractedErrors(errors));
   } catch (error) {
-    console.error(error);
     res.status(500).send('Server Error');
   }
 };
