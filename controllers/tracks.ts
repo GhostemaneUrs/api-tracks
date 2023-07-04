@@ -5,10 +5,11 @@ import { responseError, responseSuccess } from '../utils/response';
 
 export const getTrack = async (req: Request, res: Response): Promise<void> => {
   try {
-    const data = await tracks.find({});
-    res.send({ data });
+    const { id } = matchedData(req);
+    const data = await tracks.findById(id);
+    if (data) responseSuccess(res, `Detail track retrieved successfully`, data);
   } catch (error) {
-    // httpError(res, error?.message, 403);
+    responseError(res, 'Failed to retrieve detail track', `${error}`);
   }
 };
 
