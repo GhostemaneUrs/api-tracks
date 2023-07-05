@@ -1,4 +1,13 @@
 import mongoose from 'mongoose';
+import mongooseDelete, { SoftDeleteDocument } from 'mongoose-delete';
+
+interface User extends SoftDeleteDocument {
+  name: string;
+  email: string;
+  role: string;
+  password: string;
+  birthdate: Date;
+}
 
 const UserSchema = new mongoose.Schema(
   {
@@ -27,4 +36,7 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model('users', UserSchema);
+UserSchema.plugin(mongooseDelete, { overrideMethods: 'all' });
+const UserModel = mongoose.model<User>('users', UserSchema);
+
+export default UserModel;
