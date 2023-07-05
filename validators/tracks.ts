@@ -2,13 +2,13 @@ import { check } from 'express-validator';
 import { validateResult } from '../utils/validations';
 import { NextFunction, Response, Request } from 'express';
 
-export const getTrackValidator = [
+export const idTrackValidator = [
   check('id').exists().notEmpty().isMongoId(),
   (req: Request, res: Response, next: NextFunction) =>
     validateResult(req, res, next),
 ];
 
-export const createTrackValidator = [
+export const valuesTrackValidator = [
   check('name').exists().notEmpty(),
   check('album').exists().notEmpty(),
   check('cover').exists().notEmpty(),
