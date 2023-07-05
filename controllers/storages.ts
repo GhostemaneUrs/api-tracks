@@ -30,7 +30,7 @@ export const uploadFile = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { file } = matchedData(req);
+    const { file } = req;
     const data = await storage.create({
       fileName: file?.filename,
       url: `${PUBLIC_URL}/${file?.filename}`,
