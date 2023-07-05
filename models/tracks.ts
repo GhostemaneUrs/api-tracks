@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import mongooseDelete, { SoftDeleteDocument } from 'mongoose-delete';
 
 const coverValidator = {
   validator: (v: string): boolean => {
@@ -8,7 +9,23 @@ const coverValidator = {
     `${props.value} is not a valid URL!`,
 };
 
-const TracksSchema = new mongoose.Schema(
+interface Tracks extends SoftDeleteDocument {
+  name: string;
+  album: string;
+  cover: Record<string, any>;
+  artist: {
+    name: string;
+    nickname: string;
+    nationality: string;
+  };
+  duration: {
+    start: number;
+    end: number;
+  };
+  mediaId: mongoose.Schema.Types.ObjectId;
+}
+
+const TracksSchema = new mongoose.Schema<Tracks>(
   {
     name: {
       type: String,
@@ -49,4 +66,7 @@ const TracksSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model('tracks', TracksSchema);
+TracksSchema.plugin(mongooseDelete, { overrideMethods: 'all' });
+const TracksModel = mongoose.model<Tracks>('tracks', TracksSchema);
+
+export default TracksModel;
