@@ -27,17 +27,36 @@ export const createTrack = async (
   res: Response
 ): Promise<void> => {
   try {
-    const data = await tracks.create(matchedData(req, { locations: ['body'] }));
+    const data = await tracks.create(matchedData(req));
     responseSuccess(res, 'Track created successfully', data, 201);
   } catch (error) {
     responseError(res, 'Failed to create track', `${error}`);
   }
 };
 
-export const updateTrack = (req: Request, res: Response): void => {
-  res.send({ message: 'Hello from tracks' });
+export const updateTrack = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id, ...track } = matchedData(req);
+    const data = await tracks.findByIdAndUpdate(id, track, { new: true });
+    if (data) responseSuccess(res, 'Track  updated successfully', data, 201);
+  } catch (error) {
+    responseError(res, 'Failed to update track', `${error}`);
+  }
 };
 
-export const deleteTrack = (req: Request, res: Response): void => {
-  res.send({ message: 'Hello from tracks' });
+export const deleteTrack = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = matchedData(req);
+    const data = await tracks.findById(id);
+    await data?.delete();
+    if (data) responseSuccess(res, 'Track deleted successfully', data, 201);
+  } catch (error) {
+    responseError(res, 'Failed to delete track', `${error}`);
+  }
 };
