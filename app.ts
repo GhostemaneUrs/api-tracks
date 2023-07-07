@@ -3,7 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import router from './src/routes/index.r';
 import dbConnect from './src/config/mongoose';
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const app = express();
 app.use(cors());
 app.use(express.json());
